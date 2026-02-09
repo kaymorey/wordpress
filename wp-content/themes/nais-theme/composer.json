@@ -1,0 +1,12 @@
+{
+    "name": "root/app",
+    "require": {
+        "htmlburger/carbon-fields": "^3.6",
+        "jjgrainger/posttypes": "^3.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.3" 
+        }
+    }
+}

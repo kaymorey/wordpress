@@ -1,0 +1,40 @@
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: ${PROJECT_NAME}_db
+    restart: unless-stopped
+    environment:
+        - MYSQL_ALLOW_EMPTY_PASSWORD=1
+        - MARIADB_DATABASE=${DB_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    depends_on:
+      - mariadb
+    image: wordpress:latest
+    container_name: ${PROJECT_NAME}_web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - ./:/var/www/html
+
+  node:
+    image: node:20-bookworm-slim
+    working_dir: /var/www/html/wp-content/themes/nais-theme
+    user: "node"
+    command: tail -f /dev/null
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/var/www/html
+
+volumes:
+  db_data:
