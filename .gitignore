@@ -12,11 +12,13 @@ Thumbs.db
 wp-admin/
 wp-includes/
 wp-*.php
+index.php
 license.txt
 readme.html
 xmlrpc.php
 
 !wp-content/
+!wp-content/themes/nais-theme/index.php
 
 wp-content/upgrade/
 wp-content/backup-db/
